@@ -5,7 +5,7 @@ class CMyGame : public CGame
 	// Define sprites and other instance variables here
 	CSpriteOval ball;
 	CSpriteRect rect;
-	CSpriteList balls;
+	CSpriteList ballList;
 
 public:
 	CMyGame(void);
