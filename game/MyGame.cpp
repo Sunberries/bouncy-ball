@@ -20,10 +20,9 @@ void CMyGame::OnUpdate()
 {
 	Uint32 t = GetTime();
 
-	// TODO: add the game update code here
+	// TODO: add the game update code here 
 	ball.Update(t);
 	rect.Update(t);
-	for (CSprite* balls : ballList) balls->Update(t);
 
 	if (ball.GetX() >= GetWidth() - ball.GetWidth() / 2 || ball.GetX() <= 0 + ball.GetWidth() / 2)
 	{
@@ -93,68 +92,6 @@ void CMyGame::OnUpdate()
 		}
 	}
 
-	if (rand() % 30 == 0)
-	{
-		CSprite* balls = new CSpriteOval(rand() % 750 + 25, rand() % 550 + 25, 50, 50, CColor::DarkCyan(), 0);
-		balls->SetDirection(CVector(ball.GetX() - balls->GetX(), ball.GetY() - balls->GetY()));
-		balls->SetSpeed(100);
-		ballList.push_back(balls);
-	}
-
-	for (CSprite* balls : ballList)
-	{
-		if (balls->GetX() < -50 || balls->GetX() > 850 || balls->GetY() < -50 || balls->GetY() > 650) balls->Delete();
-
-		CVector v2 = balls->GetVelocity() * GetDeltaTime() / 1000.f;
-		CVector c2 = rect.GetPos() - balls->GetPos();
-		int R2 = balls->GetWidth() / 2;
-		int Y2 = rect.GetHeight() / 2;
-		int X2 = rect.GetWidth() / 2;
-		float f3;
-		float f4;
-
-		if (v2.m_y < 0)
-		{
-			f3 = (c2.m_y + Y2 + R2) / v2.m_y;
-			f4 = (c2.m_x - v2.m_x * f3) / (X2 + R2);
-			if (f3 >= 0 && f3 <= 1 && f4 >= -1 && f4 <= 1)
-			{
-				balls->SetVelocity(Reflect(ball.GetVelocity(), CVector(0, 1)));
-			}
-		}
-
-		if (v2.m_y > 0)
-		{
-			f3 = (c2.m_y - Y2 - R2) / v2.m_y;
-			f4 = (c2.m_x + v2.m_x * f3) / (X2 + R2);
-			if (f3 >= 0 && f3 <= 1 && f4 >= -1 && f4 <= 1)
-			{
-				balls->SetVelocity(Reflect(ball.GetVelocity(), CVector(0, -1)));
-			}
-		}
-
-		if (v2.m_x < 0)
-		{
-			f3 = (c2.m_x + Y2 + R2) / v2.m_x;
-			f4 = (c2.m_y - v2.m_y * f3) / (X2 + R2);
-			if (f3 >= 0 && f3 <= 1 && f4 >= -1 && f4 <= 1)
-			{
-				balls->SetVelocity(Reflect(ball.GetVelocity(), CVector(1, 0)));
-			}
-		}
-
-		if (v2.m_x > 0)
-		{
-			f3 = (c2.m_x - Y2 - R2) / v2.m_x;
-			f4 = (c2.m_y + v2.m_y * f3) / (X2 + R2);
-			if (f3 >= 0 && f3 <= 1 && f4 >= -1 && f4 <= 1)
-			{
-				balls->SetVelocity(Reflect(ball.GetVelocity(), CVector(-1, 0)));
-			}
-		}
-	}
-
-	ballList.delete_if(deleted);
 }
 
 void CMyGame::OnDraw(CGraphics* g)
@@ -162,7 +99,6 @@ void CMyGame::OnDraw(CGraphics* g)
 	// TODO: add drawing code here
 	ball.Draw(g);
 	rect.Draw(g);
-	for (CSprite* balls : ballList) balls->Draw(g);
 
 	// this will print the game time
 	*g << bottom << left << "Time elapsed: " << timetext(GetTime());
@@ -187,14 +123,7 @@ void CMyGame::OnDisplayMenu()
 // as a second phase after a menu or a welcome screen
 void CMyGame::OnStartGame()
 {
-	/*
-	for (int i = 0; i <= rand() % 10; i++)
-	{
-		CSprite* baller = new CSprite;
-		baller = ball.Clone();
-		balls.push_back(baller);
-	}
-	*/
+
 }
 
 // called when a new level started - first call for nLevel = 1
